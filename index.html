@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FinanceMe</title>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!--text-->
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Noto Sans Sinhala", "Arial", sans-serif;
+            background: #f4f4f4;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            color: #d71920;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .benefit {
+            margin: 20px 0;
+            padding: 20px;
+            border-left: 5px solid #d71920;
+            background: #fafafa;
+            border-radius: 10px;
+        }
+
+        .benefit h2 {
+            font-size: 21px;
+            color: #d71920;
+            margin-bottom: 10px;
+        }
+
+        .benefit ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+
+        .benefit li {
+            font-size: 17px;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .benefit li::before {
+            content: "✓";
+            color: #d71920;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .step {
+            background: #f1f1f1;
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .step h3 {
+            color: #d71920;
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .no-guarantor {
+            text-align: center;
+            background: #d71920;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .no-guarantor h2 {
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+        .contact {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .contact p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .phone {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 25px;
+            background: #d71920;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .phone:hover {
+            background: #b51218;
+        }
+
+        @media (max-width: 700px) {
+
+            .container {
+                margin: 10px auto;
+                padding: 10px;
+            }
+
+            .card {
+                padding: 20px;
+                border-radius: 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .benefit h2 {
+                font-size: 19px;
+            }
+
+            .benefit li {
+                font-size: 15px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .no-guarantor h2 {
+                font-size: 21px;
+            }
+
+            .phone {
+                font-size: 19px;
+            }
+        }
+        <!--butoon-->
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f5f6fa;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                         "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+                         "Open Sans", "Helvetica Neue", sans-serif;
+        }
+
+        .finance-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .title {
+            text-align: center;
+            color: rgb(34, 36, 43);
+            margin-bottom: 30px;
+        }
+
+        .finance-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 18px;
+            margin: 15px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e2e2e2;
+        }
+
+        .finance-option h5 {
+            margin: 0;
+            font-size: 17px;
+            color: #22242b;
+        }
+
+        .calculate-btn {
+            border: none;
+            background: #0d6efd;
+            color: white;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background: #084298;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .finance-container {
+                margin: 20px auto;
+                padding: 20px 15px;
+            }
+
+            .finance-option {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .calculate-btn {
+                width: 100%;
+            }
+
+            .title {
+                font-size: 20px;
+            }
+        }
+        </style>
+    </head>
+    <body>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="Gemini_Generated_Image_uv3nhguv3nhguv3n.jfif" alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="Gemini_Generated_Image_habj6khabj6khabj.jfif" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="Gemini_Generated_Image_y4chrmy4chrmy4ch.jfif" alt="Third slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+    <!--butoon-->
+    <div class="finance-container">
+
+        <h4 class="title">
+            Calculate Your Finance For Motor Bike
+        </h4>
+
+
+        <!-- 60% Down Payment -->
+        <div class="finance-option">
+
+            <h5>
+                Only 60% Down Payment
+            </h5>
+
+            <button
+                type="button"
+                class="calculate-btn"
+                onclick="window.location.href='FinanceMe1.html'">
+                Calculate
+            </button>
+
+        </div>
+
+
+        <!-- 40% Down Payment -->
+        <div class="finance-option">
+
+            <h5>
+                Only 40% Down Payment
+            </h5>
+
+            <button
+                type="button"
+                class="calculate-btn"
+                onclick="window.location.href='FinanceMe2.html'">
+                Calculate
+            </button>
+
+        </div>
+
+
+        <!-- Any Down Payment -->
+        <div class="finance-option">
+
+            <h5>
+                Any Down Payment Only
+            </h5>
+
+            <button
+                type="button"
+                class="calculate-btn"
+                onclick="window.location.href='FinanceMe3.html'">
+                Calculate
+            </button>
+
+        </div>
+
+    </div>
+<!--text-->
+    <div class="container">
+
+    <div class="card">
+
+        <div class="header">
+            <h1>ඔබගේ හීන මැවූ Bike එක ඔබේම කරගන්න</h1>
+            <p>Singer Finance තෝරාගත යුත්තේ ඇයි?</p>
+        </div>
+
+
+        <!-- 01 -->
+        <div class="benefit">
+            <h2> කඩිනම් සේවාව</h2>
+
+            <ul>
+                <li>පැය 3 න් මුදල් අතට</li>
+            </ul>
+        </div>
+
+
+        <!-- 02 -->
+        <div class="benefit">
+            <h2> ටික ටික ගෙවීමේ පහසුව</h2>
+
+            <ul>
+                <li>මාස්පතා ගෙවීමේ ක්‍රම රැසක්ම</li>
+            </ul>
+        </div>
+
+
+        <!-- 03 -->
+        <div class="benefit">
+            <h2> වෙළඳපොලේ අඩුම ලීසිං අනුපාතය අපෙන්</h2>
+        </div>
+
+
+        <!-- 04 -->
+        <div class="benefit">
+            <h2> ඔබේ වාහනයට, ඔබට ආරක්ෂාව නොමිලේම අපෙන්</h2>
+
+            <ul>
+                <li>Helmet Free</li>
+                <li>Insurance Free</li>
+            </ul>
+        </div>
+
+
+        <!-- 05 -->
+        <div class="benefit">
+            <h2> අවම ලියකියවිලි - දැන් Step 3 කින්</h2>
+
+            <div class="steps">
+
+                <div class="step">
+                    <h3>01. ඔබේ අනන්‍යතාවය තහවුරු කිරීම</h3>
+                    <p>• ID</p>
+                </div>
+
+                <div class="step">
+                    <h3>02. ඔබේ පදිංචිය තහවුරු කිරීම</h3>
+                    <p>
+                        • Light Bill<br>
+                        • Water Bill<br>
+                        • Tenancy Agreement
+                    </p>
+                </div>
+
+                <div class="step">
+                    <h3>03. ඔබේ ආදායම තහවුරු කිරීම</h3>
+                    <p>• Monthly Pay Sheet</p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- No Guarantor -->
+        <div class="no-guarantor">
+            <h2>හොඳ ගෙවීමේ ඉතිහාසයක් තියෙනවාද?</h2>
+            <p>එහෙනම් මේ වාසිය ඔබට!</p>
+            <h2>NO GUARANTOR</h2>
+        </div>
+
+
+        <!-- Contact -->
+        <div class="contact">
+            <p>වැඩි විස්තර සඳහා අමතන්න</p>
+
+            <a class="phone" href="tel:0728574958">
+                📞 0728574958
+            </a>
+        </div>
+
+    </div>
+
+</div>
+    </body>
+</html>
