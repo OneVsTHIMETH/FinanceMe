@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bike Loan Calculator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+
+        .calculator {
+            max-width: 550px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            font-size: 18px;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            background: #222;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        #result {
+            margin-top: 25px;
+        }
+
+        .box {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .title {
+            background: #222;
+            color: white;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 15px;
+            border-bottom: 1px solid #ddd;
+            gap: 10px;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .value {
+            text-align: right;
+        }
+
+        .month {
+            font-weight: bold;
+        }
+
+        .payment {
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="calculator">
+
+    <h1>(Only 40% Down Payment) </h1>
+
+    <label for="MBP">Enter Motor Bike Price</label>
+
+    <input
+        type="number"
+        id="MBP"
+        placeholder="Enter bike price"
+        min="1"
+    >
+
+    <button onclick="calculateLoan()">
+        Calculate
+    </button>
+
+    <div id="result"></div>
+
+</div>
+
+
+<script>
+
+function calculateLoan() {
+
+    // ==================================
+    // GET BIKE PRICE
+    // ==================================
+
+    let MBP = parseFloat(document.getElementById("MBP").value);
+
+    if (isNaN(MBP) || MBP <= 0) {
+
+        document.getElementById("result").innerHTML =
+            '<p class="error">Please enter a valid bike price.</p>';
+
+        return;
+    }
+
+
+    // ==================================
+    // SETTINGS
+    // ==================================
+
+    let EX = 40;       // Bike Loan %
+    let PL = 20;       // Personal Loan %
+    let PLL = 27;      // Personal Loan annual interest %
+    let IRR = 24;      // Bike Loan annual interest %
+    let OC = 2520;     // Other Charges
+
+
+    // ==================================
+    // BIKE LOAN AMOUNT
+    // ==================================
+
+    let A = MBP * EX / 100;
+
+
+    // ==================================
+    // PERSONAL LOAN AMOUNT
+    // ==================================
+
+    let B = MBP * PL / 100;
+
+
+    // ==================================
+    // TOTAL BIKE + PERSONAL LOAN
+    // ==================================
+
+    let C = A + B;
+
+
+    // ==================================
+    // DOWN PAYMENT
+    // ==================================
+
+    let DP = MBP - C;
+
+
+    // ==================================
+    // COMMISSION
+    // ==================================
+
+    let COM = MBP * 4 / 100;
+    if (COM > 50000) {
+            COM = 50000;
+        }
+
+
+    // ==================================
+    // INSURANCE
+    // ==================================
+
+    let IN = 0;
+
+    if (MBP >= 250000 && MBP <= 500000) {
+
+        IN = 16800;
+
+    } else if (MBP > 500000 && MBP <= 750000) {
+
+        IN = 21100;
+
+    } else if (MBP > 750000 && MBP <= 1000000) {
+
+        IN = 25600;
+
+    } else if (MBP > 1000000 && MBP <= 1250000) {
+
+        IN = 28800;
+
+    } else if (MBP > 1250000 && MBP <= 1500000) {
+
+        IN = 31600;
+
+    } else if (MBP > 1500000 && MBP <= 1750000) {
+
+        IN = 36100;
+
+    } else if (MBP > 1750000 && MBP <= 2000000) {
+
+        IN = 38800;
+    }
+
+
+    // ==================================
+    // BIKE LOAN AMOUNT
+    // ==================================
+
+    let LA = A + COM + IN + OC;
+
+
+    // ==================================
+    // MONTHLY INTEREST
+    // ==================================
+
+    let r = IRR / 12 / 100;
+
+    let P = PLL / 12 / 100;
+
+
+    // ==================================
+    // MONEY FORMAT
+    // ==================================
+
+    function money(value) {
+
+        return "Rs. " + value.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+    }
+
+
+    // ==================================
+    // RESULT
+    // ==================================
+
+    let output = "";
+
+    output += `
+        <div class="box">
+
+            <div class="title">
+                Bike Details
+            </div>
+
+            <div class="row">
+                <span class="label">Bike Price</span>
+                <span class="value">${money(MBP)}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Down Payment</span>
+                <span class="value">${money(DP)}</span>
+            </div>
+
+            <div class="title">
+                Monthly Payment
+            </div>
+    `;
+
+
+    // ==================================
+    // 12 - 72 MONTHS
+    // ==================================
+
+    for (let M = 12; M <= 72; M += 12) {
+
+        // Bike Loan EMI
+        let EMI =
+            LA * r * Math.pow(1 + r, M)
+            /
+            (Math.pow(1 + r, M) - 1);
+
+
+        // Personal Loan EMI
+        let PEMI =
+            B * P * Math.pow(1 + P, M)
+            /
+            (Math.pow(1 + P, M) - 1);
+
+
+        // Total Monthly Payment
+        let total = EMI + PEMI;
+
+
+        output += `
+            <div class="row">
+
+                <span class="month">
+                    ${M} Months
+                </span>
+
+                <span class="payment">
+                    ${money(total)}
+                </span>
+
+            </div>
+        `;
+    }
+
+
+    output += `
+        </div>
+    `;
+
+
+    // ==================================
+    // DISPLAY
+    // ==================================
+
+    document.getElementById("result").innerHTML = output;
+}
+
+</script>
+
+</body>
+</html>

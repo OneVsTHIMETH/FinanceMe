@@ -1,0 +1,740 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Motor Bike Loan Calculator</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+        }
+
+        .calculator {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            font-size: 17px;
+            border: 1px solid #aaa;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: #222;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        #result {
+            margin-top: 25px;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .success {
+            color: green;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .box {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            background: #222;
+            color: white;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .value {
+            text-align: right;
+        }
+
+        .month-title {
+            background: #eee;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="calculator">
+
+    <h1>Any Down Payment</h1>
+
+
+    <!-- BIKE PRICE -->
+
+    <label for="MBP">
+        Enter Motor Bike Price
+    </label>
+
+    <input
+        type="number"
+        id="MBP"
+        placeholder="Enter bike price"
+        min="1"
+    >
+
+
+    <!-- DOWN PAYMENT -->
+
+    <label for="DP">
+        Enter Down Payment
+    </label>
+
+    <input
+        type="number"
+        id="DP"
+        placeholder="Enter down payment"
+        min="0"
+    >
+
+
+    <button onclick="calculateLoan()">
+        Calculate
+    </button>
+
+
+    <div id="result"></div>
+
+</div>
+
+
+
+<script>
+
+
+function calculateLoan() {
+
+
+    // ==========================================
+    // GET INPUT
+    // ==========================================
+
+    let MBP = parseFloat(
+        document.getElementById("MBP").value
+    );
+
+    let DP = parseFloat(
+        document.getElementById("DP").value
+    );
+
+
+    // ==========================================
+    // VALIDATION
+    // ==========================================
+
+    if (isNaN(MBP) || MBP <= 0) {
+
+        document.getElementById("result").innerHTML =
+            '<p class="error">Please enter a valid Motor Bike Price.</p>';
+
+        return;
+    }
+
+
+    if (isNaN(DP) || DP < 0) {
+
+        document.getElementById("result").innerHTML =
+            '<p class="error">Please enter a valid Down Payment.</p>';
+
+        return;
+    }
+
+
+    if (DP > MBP) {
+
+        document.getElementById("result").innerHTML =
+            '<p class="error">Down Payment cannot be higher than Bike Price.</p>';
+
+        return;
+    }
+
+
+
+    // ==========================================
+    // DOWN PAYMENT PERCENTAGE
+    // ==========================================
+
+    let PR = DP / MBP * 100;
+
+    let LR = 100 - PR;
+
+
+
+    // ==========================================
+    // MONEY FORMAT
+    // ==========================================
+
+    function money(value) {
+
+        return "Rs. " + value.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+    }
+
+
+
+    // ==========================================
+    // DOWN PAYMENT BELOW 40%
+    // ==========================================
+
+    if (PR < 40) {
+
+        document.getElementById("result").innerHTML = `
+
+            <div class="box">
+
+                <div class="title">
+                    Result
+                </div>
+
+                <div class="row">
+                    <span class="label">
+                        Motor Bike Price
+                    </span>
+
+                    <span class="value">
+                        ${money(MBP)}
+                    </span>
+                </div>
+
+                <div class="row">
+                    <span class="label">
+                        Down Payment
+                    </span>
+
+                    <span class="value">
+                        ${money(DP)}
+                    </span>
+                </div>
+
+                <div class="row">
+                    <span class="label">
+                        Down Payment %
+                    </span>
+
+                    <span class="value">
+                        ${PR.toFixed(2)}%
+                    </span>
+                </div>
+
+            </div>
+
+            <p class="error">
+                Down Payment must be higher than 40%
+            </p>
+        `;
+
+        return;
+    }
+
+
+
+    // ==========================================
+    // 60% OR HIGHER DOWN PAYMENT
+    // ==========================================
+
+    if (PR >= 60) {
+
+
+        let IRR = 26;
+
+        let OC = 2520;
+
+
+        // --------------------------------------
+        // LOAN AMOUNT
+        // --------------------------------------
+
+        let A = MBP - DP;
+
+
+        // --------------------------------------
+        // COMMISSION
+        // 4%, MAXIMUM 50,000
+        // --------------------------------------
+
+        let COM = MBP * 4 / 100;
+
+        if (COM > 50000) {
+            COM = 50000;
+        }
+
+
+        // --------------------------------------
+        // INSURANCE
+        // --------------------------------------
+
+        let IN = 0;
+
+
+        if (MBP <= 500000) {
+
+            IN = 16800;
+
+        } else if (MBP <= 750000) {
+
+            IN = 21100;
+
+        } else if (MBP <= 1000000) {
+
+            IN = 25600;
+
+        } else if (MBP <= 1250000) {
+
+            IN = 28800;
+
+        } else if (MBP <= 1500000) {
+
+            IN = 31600;
+
+        } else if (MBP <= 1750000) {
+
+            IN = 36100;
+
+        } else if (MBP <= 2000000) {
+
+            IN = 38800;
+
+        } else {
+
+            IN = 0;
+        }
+
+
+
+        // --------------------------------------
+        // TOTAL LOAN
+        // --------------------------------------
+
+        let LA = A + COM + IN + OC;
+
+
+        // --------------------------------------
+        // MONTHLY INTEREST
+        // --------------------------------------
+
+        let r = IRR / 12 / 100;
+
+
+
+        // --------------------------------------
+        // OUTPUT
+        // --------------------------------------
+
+        let output = `
+
+            <div class="box">
+
+                <div class="title">
+                    Loan Details
+                </div>
+
+                <div class="row">
+                    <span class="label">
+                        Motor Bike Price
+                    </span>
+
+                    <span class="value">
+                        ${money(MBP)}
+                    </span>
+                </div>
+
+                <div class="row">
+                    <span class="label">
+                        Down Payment
+                    </span>
+
+                    <span class="value">
+                        ${money(DP)}
+                    </span>
+                </div>
+
+                <div class="row">
+                    <span class="label">
+                        Down Payment %
+                    </span>
+
+                    <span class="value">
+                        ${PR.toFixed(2)}%
+                    </span>
+                </div>
+            </div>
+
+        `;
+
+
+
+        // --------------------------------------
+        // MONTHLY PAYMENTS
+        // --------------------------------------
+
+        for (let M = 12; M <= 72; M += 12) {
+
+
+            let EMI =
+                LA * r * Math.pow(1 + r, M)
+                /
+                (Math.pow(1 + r, M) - 1);
+
+
+            output += `
+
+                <div class="box">
+
+                    <div class="month-title">
+                        Month: ${M}
+                    </div>
+
+                    <div class="row">
+
+                        <span class="label">
+                            Monthly Payment
+                        </span>
+
+                        <span class="value">
+                            ${money(EMI)}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `;
+        }
+
+
+        document.getElementById("result").innerHTML = output;
+
+        return;
+    }
+
+
+
+    // ==========================================
+    // DOWN PAYMENT 40% - 59.99%
+    // ==========================================
+
+
+    let EX = 40;
+
+    let PL = LR - EX;
+
+    let PLL = 28;
+
+    let IRR = 26;
+
+    let OC = 2520;
+
+
+
+    // ------------------------------------------
+    // BIKE LOAN = 40%
+    // ------------------------------------------
+
+    let A = MBP * EX / 100;
+
+
+    // ------------------------------------------
+    // PERSONAL LOAN
+    // ------------------------------------------
+
+    let B = MBP * PL / 100;
+
+
+    // ------------------------------------------
+    // COMMISSION
+    // 4%, MAXIMUM 50,000
+    // ------------------------------------------
+
+    let COM = MBP * 4 / 100;
+
+    if (COM > 50000) {
+
+        COM = 50000;
+    }
+
+
+
+    // ------------------------------------------
+    // INSURANCE
+    // ------------------------------------------
+
+    let IN = 0;
+
+
+    if (MBP <= 500000) {
+
+        IN = 16800;
+
+    } else if (MBP <= 750000) {
+
+        IN = 21100;
+
+    } else if (MBP <= 1000000) {
+
+        IN = 25600;
+
+    } else if (MBP <= 1250000) {
+
+        IN = 28800;
+
+    } else if (MBP <= 1500000) {
+
+        IN = 31600;
+
+    } else if (MBP <= 1750000) {
+
+        IN = 36100;
+
+    } else if (MBP <= 2000000) {
+
+        IN = 38800;
+
+    } else {
+
+        IN = 0;
+    }
+
+
+
+    // ------------------------------------------
+    // BIKE LOAN AMOUNT
+    // ------------------------------------------
+
+    let LA = A + COM + IN + OC;
+
+
+
+    // ------------------------------------------
+    // MONTHLY INTEREST
+    // ------------------------------------------
+
+    let r = IRR / 12 / 100;
+
+    let p = PLL / 12 / 100;
+
+
+
+    // ------------------------------------------
+    // OUTPUT
+    // ------------------------------------------
+
+    let output = `
+
+        <div class="box">
+
+            <div class="title">
+                Loan Details
+            </div>
+
+            <div class="row">
+                <span class="label">
+                    Motor Bike Price
+                </span>
+
+                <span class="value">
+                    ${money(MBP)}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">
+                    Down Payment
+                </span>
+
+                <span class="value">
+                    ${money(DP)}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">
+                    Down Payment %
+                </span>
+
+                <span class="value">
+                    ${PR.toFixed(2)}%
+                </span>
+            </div>
+        </div>
+
+    `;
+
+
+
+    // ------------------------------------------
+    // MONTHLY PAYMENTS
+    // ------------------------------------------
+
+    for (let M = 12; M <= 72; M += 12) {
+
+
+        // Bike Loan EMI
+
+        let EMI =
+            LA * r * Math.pow(1 + r, M)
+            /
+            (Math.pow(1 + r, M) - 1);
+
+
+
+        // Personal Loan EMI
+
+        let PEMI =
+            B * p * Math.pow(1 + p, M)
+            /
+            (Math.pow(1 + p, M) - 1);
+
+
+
+        // Total Payment
+
+        let total = EMI + PEMI;
+
+
+
+        output += `
+
+            <div class="box">
+
+                <div class="month-title">
+                    Month: ${M}
+                </div>
+
+                <div class="row">
+
+                    <span class="label">
+                        Bike Loan Payment
+                    </span>
+
+                    <span class="value">
+                        ${money(EMI)}
+                    </span>
+
+                </div>
+
+                <div class="row">
+
+                    <span class="label">
+                        Personal Loan Payment
+                    </span>
+
+                    <span class="value">
+                        ${money(PEMI)}
+                    </span>
+
+                </div>
+
+                <div class="row">
+
+                    <span class="label">
+                        Total Payment
+                    </span>
+
+                    <span class="value">
+                        ${money(total)}
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+    }
+
+
+
+    // ==========================================
+    // DISPLAY RESULT
+    // ==========================================
+
+    document.getElementById("result").innerHTML = output;
+
+}
+
+</script>
+
+
+</body>
+</html>
+
