@@ -107,6 +107,31 @@
             margin-top: 10px;
             text-align: center;
         }
+        .contact {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .contact p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .phone {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 25px;
+            background: #d71920;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .phone:hover {
+            background: #b51218;
+        }
     </style>
 </head>
 
@@ -276,7 +301,7 @@ function calculateLoan() {
     // EMI 12 - 72 MONTHS
     // =========================
 
-    for (let M = 12; M <= 72; M += 12) {
+    for (let M = 12; M <= 60; M += 12) {
 
         let EMI =
             LA * r * Math.pow(1 + r, M)
@@ -309,6 +334,13 @@ function calculateLoan() {
 }
 
 </script>
+<!-- Contact -->
+        <div class="contact">
+            <p>වැඩි විස්තර සඳහා අමතන්න</p>
 
+            <a class="phone" href="tel:0728574958">
+                📞 0728574958
+            </a>
+        </div>
 </body>
 </html>
