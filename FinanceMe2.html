@@ -115,6 +115,36 @@
             text-align: center;
             margin-top: 15px;
         }
+        .contact {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .contact p {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .phone {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 25px;
+            background: #d71920;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .phone:hover {
+            background: #b51218;
+        }
+        .month-title {
+            background: #eee;
+            padding: 10px 15px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -306,10 +336,10 @@ function calculateLoan() {
 
 
     // ==================================
-    // 12 - 72 MONTHS
+    // 12 - 60 MONTHS
     // ==================================
 
-    for (let M = 12; M <= 72; M += 12) {
+    for (let M = 12; M <= 60; M += 12) {
 
         // Bike Loan EMI
         let EMI =
@@ -330,15 +360,47 @@ function calculateLoan() {
 
 
         output += `
-            <div class="row">
+            <div class="box">
 
-                <span class="month">
-                    ${M} Months
-                </span>
+                <div class="month-title">
+                    Month: ${M}
+                </div>
 
-                <span class="payment">
-                    ${money(total)}
-                </span>
+                <div class="row">
+
+                    <span class="label">
+                        Bike Loan Payment
+                    </span>
+
+                    <span class="value">
+                        ${money(EMI)}
+                    </span>
+
+                </div>
+
+                <div class="row">
+
+                    <span class="label">
+                        Personal Loan Payment
+                    </span>
+
+                    <span class="value">
+                        ${money(PEMI)}
+                    </span>
+
+                </div>
+
+                <div class="row">
+
+                    <span class="label">
+                        Total Payment
+                    </span>
+
+                    <span class="value">
+                        ${money(total)}
+                    </span>
+
+                </div>
 
             </div>
         `;
@@ -358,6 +420,13 @@ function calculateLoan() {
 }
 
 </script>
+<!-- Contact -->
+        <div class="contact">
+            <p>වැඩි විස්තර සඳහා අමතන්න</p>
 
+            <a class="phone" href="tel:0728574958">
+                📞 0728574958
+            </a>
+        </div>
 </body>
 </html>
